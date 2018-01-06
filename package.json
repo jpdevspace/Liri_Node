@@ -1,0 +1,34 @@
+{
+  "name": "liri_node",
+  "version": "1.0.0",
+  "description": "Command line Node app that takes in parameters to display info from Twitter, Spotify and OMDB.",
+  "main": "app.js",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "node-spotify-api": "^1.0.7",
+    "request": "^2.83.0",
+    "twitter": "^1.7.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test this"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpdevspace/Liri_Node.git"
+  },
+  "keywords": [
+    "Node",
+    "Twitter",
+    "Spotify",
+    "OMDB",
+    "Command",
+    "Line"
+  ],
+  "author": "Jean Paul Giraldo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpdevspace/Liri_Node/issues"
+  },
+  "homepage": "https://github.com/jpdevspace/Liri_Node#readme"
+}
