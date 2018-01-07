@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const Twitter = require('twitter');
 const request = require('request');
 const Spotify = require('node-spotify-api');
@@ -30,6 +31,7 @@ const myTweets = () => {
         }
     });
 }
+
 
 // Spotify API - Function that displays: Artist, Album and the preview url from a song that the user chooses
 const mySpotify = userInput => {
@@ -74,6 +76,7 @@ const mySpotify = userInput => {
     });
 };
 
+
 const myMovie = title => {
     let userInputArr = [];  // Holds all arguments passed by the user in the command line
     let userInputStr = '';  // Holds all arguments as one string
@@ -111,6 +114,25 @@ const myMovie = title => {
             `);
         }   
     });
+}
+
+
+const doIt = () => {
+    let userCommand = '';
+    let defaultArgument = '';
+    
+    fs.readFile('./random.txt', 'utf8', (err, data) => {    // Read the file 'random.txt'
+        if (err) throw err;    // If there's an error show it
+        
+        let dataToArr = data.split(',');    // Turn the data in the file into an array
+        
+        userCommand = dataToArr[0];
+        defaultArgument = dataToArr[1];
+        
+        console.log(userCommand);
+        console.log(defaultArgument);
+    });
+
 
 }
 
@@ -128,7 +150,7 @@ switch(process.argv[2]) {
         myMovie(process.argv);
         break;
     case 'do-what-it-says':
-        lotto();
+        doIt();
         break;
     default:
         console.log('yeah');
