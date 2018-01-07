@@ -2,8 +2,8 @@ require('dotenv').config();
 const fs = require('fs');
 const { spawn } = require('child_process');
 const Twitter = require('twitter');
-const request = require('request');
 const Spotify = require('node-spotify-api');
+const request = require('request');
 const myKeys = require('./keys');
 
 // Creating new connections to Twitter and Spotify
@@ -17,18 +17,25 @@ const myTweets = () => {
         screen_name: 'JeanPaulG_', // Query Search
     };
 
+    // Call to Twitter API using our Twitter connection
     client.get('https://api.twitter.com/1.1/statuses/user_timeline.json', params, (error, data, response) => {
         if (error) throw error;
 
         const totalTweets = data.length;
         console.log(`Here is a list of all ${totalTweets} of Jean Paul's Tweets:\n`);
 
+        // Append the results into a file called 'log.txt', if no file, it creates it
+        fs.appendFile('log.txt', '\n##### Results from Twitter API #####\n', err => { if (err) throw err; });
+
         for (let i = 0; i < totalTweets; i++) {
-            console.log(`
-                Tweet #${i+1}:\n
-                Created on: ${data[i].created_at}\n
+            let result = `
+                Tweet #${i+1}:
+                Created on: ${data[i].created_at}
                 Content: ${data[i].text}\n
-            `);
+            `;
+            
+            console.log(result);    // Display result in terminal
+            fs.appendFile('log.txt', `${result}`, err => { if (err) throw err; });   // Append results in log.txt
         }
     });
 }
@@ -50,7 +57,7 @@ const mySpotify = userInput => {
             userInputStr = userInputArr.join(' ');
         }
     }
-    // Spotify API to search for song
+    // Call to Spotify API to search for song using our Spotify connection
     spotify.search({ type: 'track', query: userInputStr }, (err, data) => {
         
         if (err) { return console.log('Error occurred: ' + err); }; // If there's an error show it
@@ -65,14 +72,19 @@ const mySpotify = userInput => {
             resultsSubset = totalResults;   // Display all available data
         }
 
+        // Append results in log.txt
+        fs.appendFile('log.txt', '\n##### Results from Spotify API ####\n', err => { if (err) throw err; });
         for(let j = 0; j < resultsSubset; j++) { // Looping through the response JSON to display specific info
-            console.log(`
+            let result = `
                 Result #${j+1}:
                 Song: ${data.tracks.items[j].name}
                 Artist: ${data.tracks.items[j].album.artists[0].name}
                 Album: ${data.tracks.items[j].album.name}
                 Preview: ${data.tracks.items[j].preview_url}
-            `);
+            `;
+            
+            console.log(result);    // Display result in terminal
+            fs.appendFile('log.txt', `${result}`, err => { if (err) throw err; });   // Append results in log.txt
         };
     });
 };
@@ -101,18 +113,24 @@ const myMovie = title => {
         if (error) throw error; // If there's an error show it
         if (!error && response.statusCode === 200) {
             let jsonBody = JSON.parse(body);  // The response is a huge string... parse it as a JSON
-            console.log(`
+            
+            // Append results in log.txt
+            fs.appendFile('log.txt', '\n##### Results from OMDB API ####\n', err => { if (err) throw err; });
+
+            let result = `  
                 Movie: ${jsonBody.Title}
                 Released date: ${jsonBody.Released}
-                IMDB?: ${jsonBody.Ratings[0].Source}
                 IMDB Rating: ${jsonBody.Ratings[0].Value}
-                RottenTomatoe?: ${jsonBody.Ratings[1].Source}
                 Rotten Tomatoes Rating: ${jsonBody.Ratings[1].Value}
                 Country: ${jsonBody.Country}
                 Language: ${jsonBody.Language}
                 Actors: ${jsonBody.Actors}
                 About: ${jsonBody.Plot}
-            `);
+            `;
+
+            console.log(result);    // Display result in terminal
+            fs.appendFile('log.txt', `${result}`, err => { if (err) throw err; });   // Append results in log.txt
+
         }   
     });
 }
@@ -143,7 +161,6 @@ const doIt = () => {
         });
     });
 }
-
 
 
 // Get user arguments from the command line and call the appropiate function 
