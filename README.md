@@ -22,16 +22,33 @@ npm install
 ```
 # Twitter API keys
 
-TWITTER_CONSUMER_KEY=your-twitter-consumer-key
-TWITTER_CONSUMER_SECRET=your-twitter-consumer-secret
-TWITTER_ACCESS_TOKEN_KEY=your-access-token-key
-TWITTER_ACCESS_TOKEN_SECRET=your-twitter-access-token-secret
+    TWITTER_CONSUMER_KEY=your-twitter-consumer-key
+    TWITTER_CONSUMER_SECRET=your-twitter-consumer-secret
+    TWITTER_ACCESS_TOKEN_KEY=your-access-token-key
+    TWITTER_ACCESS_TOKEN_SECRET=your-twitter-access-token-secret
 
 # Spotify API keys
 
-SPOTIFY_ID=your-spotify-id
-SPOTIFY_SECRET=your-spotify-secret
+    SPOTIFY_ID=your-spotify-id
+    SPOTIFY_SECRET=your-spotify-secret
 ```
+
+4. Run the Node app with:
+
+```
+node app.js <command>
+```
+
+## Commands Available
+
+```
+node app.js my-tweets // Get latest 20 Tweets from a given account
+node app.js spotify-this-song <song name> // Get info from Spotify about this song
+node app.js movie-this <movie name> // Get info from OMDB about this movie
+node app.js do-what-it-says // Runs the command included in the random.txt file
+node app.js <wrong command> // Alert user to try a different command  
+```
+
 
 ## Built With
 [Node] (https://nodejs.org/en/)
