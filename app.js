@@ -1,5 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
+const { spawn } = require('child_process');
 const Twitter = require('twitter');
 const request = require('request');
 const Spotify = require('node-spotify-api');
@@ -117,7 +118,8 @@ const myMovie = title => {
 }
 
 
-const doIt = () => {
+// Function that reads a file from the system and executes Node using the arguments in the text file
+const doIt = () => {    
     let userCommand = '';
     let defaultArgument = '';
     
@@ -128,12 +130,18 @@ const doIt = () => {
         
         userCommand = dataToArr[0];
         defaultArgument = dataToArr[1];
-        
-        console.log(userCommand);
-        console.log(defaultArgument);
+
+        // Spawning a child process spawn(command [,arguments])
+        const child = spawn('node', ['app.js', userCommand, defaultArgument]);
+
+        child.stdout.on('data', (data) => { // When data is received, print it
+            console.log(`${data}`);
+        });
+          
+        child.stderr.on('data', (data) => { // If there is an error, print it
+            console.error(`Error:\n${data}`);
+        });
     });
-
-
 }
 
 
@@ -153,5 +161,5 @@ switch(process.argv[2]) {
         doIt();
         break;
     default:
-        console.log('yeah');
+        console.log('Please try again using a valid command');
 };
