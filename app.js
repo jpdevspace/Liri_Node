@@ -35,13 +35,18 @@ const myTweets = () => {
 const mySpotify = (userInput) => {
     let userInputArr = [];  // Holds all arguments passed by the user in the command line
     let userInputStr = '';  // Holds all arguments as one string
+    let resultsSubset = 0;
 
-    // Converts the array of arguments into one string to be used as a query search string
-    for ( let i = 3; i < userInput.length; i++) {
-        userInputArr.push(userInput[i]);
-        userInputStr = userInputArr.join(' ');
+    if( userInput.length == 3 ) {
+        userInputStr = "The Sign by Ace of Base";
+    } 
+    else {
+        // Converts the array of arguments into one string to be used as a query search string
+        for ( let i = 3; i < userInput.length; i++) {
+            userInputArr.push(userInput[i]);
+            userInputStr = userInputArr.join(' ');
+        }
     }
-
     // Spotify API to search for song
     spotify.search({ type: 'track', query: userInputStr }, (err, data) => {
         
@@ -50,7 +55,14 @@ const mySpotify = (userInput) => {
         let totalResults = data.tracks.total;   // Get the number of results from the response object
         console.log(`Results Found: ${totalResults}`);  // Let the user know how many results where found
 
-        for(let j = 0; j < totalResults; j++) { // Looping through the response JSON to display specific info
+        if (totalResults > 5) {    // If there are more than 5 results 
+            resultsSubset = 5;      // Show only the first 5
+        }
+        else {  // If there are less than 5 results
+            resultsSubset = totalResults;   // Display all available data
+        }
+
+        for(let j = 0; j < resultsSubset; j++) { // Looping through the response JSON to display specific info
             console.log(`
                 Result #${j+1}:
                 Song: ${data.tracks.items[j].name}
@@ -58,10 +70,10 @@ const mySpotify = (userInput) => {
                 Album: ${data.tracks.items[j].album.name}
                 Preview: ${data.tracks.items[j].preview_url}
             `);
-            
         };
     });
 }
+
 
 // Get user arguments from the command line and call the appropiate function 
 switch(process.argv[2]) {
