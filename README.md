@@ -68,8 +68,8 @@ node app.js <wrong command>
 
 ## Built With
 
-[Node](https://nodejs.org/en/)
-[Twitter](https://www.npmjs.com/package/twitter) NPM Package
-[Spotify](https://www.npmjs.com/package/node-spotify-api) NPM Package
-[Request](https://www.npmjs.com/package/request) NPM Package
-[DotENV](https://www.npmjs.com/package/dotenv) NPM Package
+* [Node](https://nodejs.org/en/)
+* [Twitter](https://www.npmjs.com/package/twitter) NPM Package
+* [Spotify](https://www.npmjs.com/package/node-spotify-api) NPM Package
+* [Request](https://www.npmjs.com/package/request) NPM Package
+* [DotENV](https://www.npmjs.com/package/dotenv) NPM Package
