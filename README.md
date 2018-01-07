@@ -41,18 +41,35 @@ node app.js <command>
 
 ## Commands Available
 
+Get latest 20 Tweets from a given account
 ```
-node app.js my-tweets // Get latest 20 Tweets from a given account
-node app.js spotify-this-song <song name> // Get info from Spotify about this song
-node app.js movie-this <movie name> // Get info from OMDB about this movie
-node app.js do-what-it-says // Runs the command included in the random.txt file
-node app.js <wrong command> // Alert user to try a different command  
+node app.js my-tweets
 ```
 
+Get info from Spotify about this song
+```
+node app.js spotify-this-song <song name> 
+```
+
+Get info from OMDB about this movie
+```
+node app.js movie-this <movie name>
+```
+
+Runs the command included in the random.txt file
+```
+node app.js do-what-it-says
+```
+
+Alert user to try a different command  
+```
+node app.js <wrong command>
+```
 
 ## Built With
-[Node] (https://nodejs.org/en/)
-[Twitter] (https://www.npmjs.com/package/twitter) NPM Package
-[Spotify] (https://www.npmjs.com/package/node-spotify-api) NPM Package
-[Request] (https://www.npmjs.com/package/request) NPM Package
-[DotENV] (https://www.npmjs.com/package/dotenv) NPM Package
+
+[Node](https://nodejs.org/en/)
+[Twitter](https://www.npmjs.com/package/twitter) NPM Package
+[Spotify](https://www.npmjs.com/package/node-spotify-api) NPM Package
+[Request](https://www.npmjs.com/package/request) NPM Package
+[DotENV](https://www.npmjs.com/package/dotenv) NPM Package
