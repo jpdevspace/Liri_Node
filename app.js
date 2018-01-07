@@ -32,7 +32,7 @@ const myTweets = () => {
 }
 
 // Spotify API - Function that displays: Artist, Album and the preview url from a song that the user chooses
-const mySpotify = (userInput) => {
+const mySpotify = userInput => {
     let userInputArr = [];  // Holds all arguments passed by the user in the command line
     let userInputStr = '';  // Holds all arguments as one string
     let resultsSubset = 0;
@@ -72,7 +72,48 @@ const mySpotify = (userInput) => {
             `);
         };
     });
+};
+
+const myMovie = title => {
+    let userInputArr = [];  // Holds all arguments passed by the user in the command line
+    let userInputStr = '';  // Holds all arguments as one string
+
+    if( title.length == 3 ) {
+        userInputStr = "Mr. Nobody";
+    } 
+    else {
+        // Converts the array of arguments into one string to be used as a query search string
+        for ( let i = 3; i < title.length; i++) {
+            userInputArr.push(title[i]);
+            userInputStr = userInputArr.join(' ');
+        }
+    }
+
+    // OMDB API endpoint
+    let queryUrl = "http://www.omdbapi.com/?t=" + userInputStr + "&y=&plot=short&apikey=trilogy";
+
+    // Then create a request to the queryUrl
+    request(queryUrl, function (error, response, body) {
+        if (error) throw error; // If there's an error show it
+        if (!error && response.statusCode === 200) {
+            let jsonBody = JSON.parse(body);  // The response is a huge string... parse it as a JSON
+            console.log(`
+                Movie: ${jsonBody.Title}
+                Released date: ${jsonBody.Released}
+                IMDB?: ${jsonBody.Ratings[0].Source}
+                IMDB Rating: ${jsonBody.Ratings[0].Value}
+                RottenTomatoe?: ${jsonBody.Ratings[1].Source}
+                Rotten Tomatoes Rating: ${jsonBody.Ratings[1].Value}
+                Country: ${jsonBody.Country}
+                Language: ${jsonBody.Language}
+                Actors: ${jsonBody.Actors}
+                About: ${jsonBody.Plot}
+            `);
+        }   
+    });
+
 }
+
 
 
 // Get user arguments from the command line and call the appropiate function 
@@ -84,7 +125,7 @@ switch(process.argv[2]) {
         mySpotify(process.argv);
         break;
     case 'movie-this':
-        withdraw(process.argv[3]);
+        myMovie(process.argv);
         break;
     case 'do-what-it-says':
         lotto();
